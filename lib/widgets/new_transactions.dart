@@ -61,9 +61,12 @@ class _NewTransactinosState extends State<NewTransactinos> {
                   _descController.text,
                   _currController.text,
                   'Transaction',
-                  DateTime.parse(
-                      DateFormat("yyyy-MM-dd hh:mm").format(DateTime.now())),
+                  DateFormat("yyyy-MM-dd hh:mm").format(DateTime.now()),
                 );
+                _nameController.text = '';
+                _amountController.text = '';
+                _descController.text = '';
+                _currController.text = '';
                 Navigator.of(context).pop();
               },
               child: Text('Confirm'),
@@ -113,6 +116,7 @@ class _NewTransactinosState extends State<NewTransactinos> {
               decoration: InputDecoration(labelText: 'Description'),
               controller: _descController,
               focusNode: _descriptionFocusNode,
+              maxLines: 1,
               onFieldSubmitted: (_) {
                 FocusScope.of(context).requestFocus(_currFocusNode);
               },

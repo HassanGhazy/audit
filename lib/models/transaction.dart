@@ -6,8 +6,8 @@ class Transaction {
   final double amount;
   final String description;
   final String currncy;
-  final DateTime oldDate;
-  final DateTime newDate;
+  final String oldDate;
+  final String newDate;
   final String type;
 
   Transaction({

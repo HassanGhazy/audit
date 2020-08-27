@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
           AddTransactinos.routeName: (ctx) => AddTransactinos(),
           ListTransactions.routeName: (ctx) => ListTransactions(),
           HistoryDelete.routeName: (ctx) => HistoryDelete(),
-          // TestSwitch.routeName: (ctx) => TestSwitch(),
         },
       ),
     );

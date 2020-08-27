@@ -10,15 +10,6 @@ class Chart extends StatelessWidget {
     Map<String, double> dataMap = new Map();
 
     List<Color> colorList = [
-      // Colors.purple[900],
-      // Colors.green[900],
-      // Colors.blue[900],
-      // Colors.yellow[900],
-      // Colors.amber[900],
-      // Colors.black12,
-      // Colors.red[900],
-      // Colors.cyan[900],
-      // Colors.brown[900],
       Colors.purple[50],
       Colors.purple[100],
       Colors.purple[200],
@@ -41,41 +32,90 @@ class Chart extends StatelessWidget {
       Colors.blue[900],
     ];
 
-    for (var i = 0; i < chartAmount.transactoin.length; i++) {
-      if (chartAmount.transactoin[i].type == 'Debt')
-        dataMap.putIfAbsent(chartAmount.transactoin[i].name,
-            () => chartAmount.transactoin[i].amount);
-    }
-
-    return (dataMap.isNotEmpty)
-        ? Container(
-            height: 200,
-            child: ListView(
-              children: <Widget>[
-                PieChart(
-                  dataMap: dataMap,
-                  animationDuration: Duration(milliseconds: 800),
-                  chartLegendSpacing: 32.0,
-                  chartRadius: MediaQuery.of(context).size.width / 2.7,
-                  showChartValuesInPercentage: true,
-                  showChartValues: true,
-                  showChartValuesOutside: false,
-                  chartValueBackgroundColor: Colors.grey[200],
-                  colorList: colorList,
-                  showLegends: true,
-                  legendPosition: LegendPosition.right,
-                  decimalPlaces: 1,
-                  showChartValueLabel: true,
-                  initialAngle: 0,
-                  legendStyle: TextStyle(color: Colors.white),
-                  chartValueStyle: defaultChartValueStyle.copyWith(
-                    color: Colors.blueGrey[900].withOpacity(0.9),
-                  ),
-                  chartType: ChartType.disc,
-                ),
-              ],
-            ),
-          )
-        : Container();
+    return FutureBuilder(
+      future: Provider.of<Transacts>(context).fetchAndSetTransaction(),
+      builder: (context, snapshot) {
+        return snapshot.connectionState == ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<Transacts>(
+                child: Container(),
+                builder: (ctx, transacts, ch) {
+                  return transacts.transactoin.length <= 0
+                      ? ch
+                      : Container(
+                          height: 200,
+                          child: ListView.builder(
+                              itemCount: chartAmount.transactoin.length,
+                              itemBuilder: (context, i) {
+                                for (var i = 0;
+                                    i < chartAmount.transactoin.length;
+                                    i++) {
+                                  if (chartAmount.transactoin[i].type == 'Debt')
+                                    dataMap.putIfAbsent(
+                                        chartAmount.transactoin[i].name,
+                                        () =>
+                                            chartAmount.transactoin[i].amount);
+                                }
+                                return (dataMap.isNotEmpty)
+                                    ? Container(
+                                        height: 200,
+                                        child: ListView(
+                                          children: <Widget>[
+                                            PieChart(
+                                              dataMap: dataMap,
+                                              animationDuration:
+                                                  Duration(milliseconds: 800),
+                                              chartLegendSpacing: 32.0,
+                                              chartRadius:
+                                                  MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2.7,
+                                              showChartValuesInPercentage: true,
+                                              showChartValues: true,
+                                              showChartValuesOutside: false,
+                                              chartValueBackgroundColor:
+                                                  Colors.grey[200],
+                                              colorList: colorList,
+                                              showLegends: true,
+                                              legendPosition:
+                                                  LegendPosition.right,
+                                              decimalPlaces: 1,
+                                              showChartValueLabel: true,
+                                              initialAngle: 0,
+                                              legendStyle: TextStyle(
+                                                  color: Colors.white),
+                                              chartValueStyle:
+                                                  defaultChartValueStyle
+                                                      .copyWith(
+                                                color: Colors.blueGrey[900]
+                                                    .withOpacity(0.9),
+                                              ),
+                                              chartType: ChartType.disc,
+                                            ),
+                                            Center(
+                                              child: Text(
+                                                'Chart Debts',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 5))
+                                          ],
+                                        ),
+                                      )
+                                    : Container(
+                                        height: 0,
+                                      );
+                              }),
+                        );
+                });
+      },
+    );
   }
 }

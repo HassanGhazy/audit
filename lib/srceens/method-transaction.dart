@@ -5,8 +5,18 @@ import 'package:audit/srceens/list_transactions.dart';
 // import 'package:audit/srceens/test_switch.dart';
 import 'package:audit/widgets/chart.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MethodTransaction extends StatelessWidget {
+  _launchURL(String goUrl) async {
+    String url = goUrl;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,17 +86,21 @@ class MethodTransaction extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       FlatButton.icon(
-                          onPressed: () {},
+                          onPressed: () => _launchURL(
+                              'https://docs.google.com/document/d/1aQEFDGxmCoTWkpWQyx4q63bK844rF-MBFxOYGB8YBGM'),
                           icon: Icon(
                             MyIcon.privecy_police,
                             color: Color.fromRGBO(12, 28, 101, 1),
+                            size: 35,
                           ),
                           label: Text('Privacy Policy')),
                       FlatButton.icon(
-                          onPressed: () {},
+                          onPressed: () => _launchURL(
+                              'https://docs.google.com/document/d/1F0nZzGsTKIYRGQENq_3OZqVtJDFTACGYpna9bXN9yoM'),
                           icon: Icon(
                             MyIcon.usage_agreement_,
                             color: Color.fromRGBO(12, 28, 101, 1),
+                            size: 35,
                           ),
                           label: Text('Usage Agreement')),
                     ],

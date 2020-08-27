@@ -67,7 +67,13 @@ class _NewDebtState extends State<NewDebt> {
                     _descController.text,
                     _currController.text,
                     'Debt',
-                    DateTime.parse(_dateController.text));
+                    _dateController.text);
+
+                _nameController.text = '';
+                _amountController.text = '';
+                _descController.text = '';
+                _currController.text = '';
+
                 Navigator.of(context).pop();
               },
               child: Text('Confirm'),
