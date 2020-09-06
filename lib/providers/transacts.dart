@@ -130,4 +130,16 @@ class Transacts with ChangeNotifier {
         )
         .toList();
   }
+
+  updateTransaction(double amount, String currncy, String id) async {
+    final db = await DBHelper.database();
+    int result = await db.rawUpdate('''
+    UPDATE transactio  
+    SET amount = ?, currncy = ? 
+    WHERE id = ?
+    ''', [amount, currncy, id]);
+    print('done provider');
+
+    return result;
+  }
 }

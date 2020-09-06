@@ -86,23 +86,25 @@ class MethodTransaction extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       FlatButton.icon(
-                          onPressed: () => _launchURL(
-                              'https://docs.google.com/document/d/1aQEFDGxmCoTWkpWQyx4q63bK844rF-MBFxOYGB8YBGM'),
-                          icon: Icon(
-                            MyIcon.privecy_police,
-                            color: Color.fromRGBO(12, 28, 101, 1),
-                            size: 35,
-                          ),
-                          label: Text('Privacy Policy')),
+                        onPressed: () => _launchURL(
+                            'https://docs.google.com/document/d/1QEN_Bnh3_lw0c4SRlwsM936WLNBUdBgh6I4kwkucH24'),
+                        icon: Icon(
+                          MyIcon.privecy_police,
+                          color: Color.fromRGBO(12, 28, 101, 1),
+                          size: 35,
+                        ),
+                        label: Text('Privacy Policy'),
+                      ),
                       FlatButton.icon(
-                          onPressed: () => _launchURL(
-                              'https://docs.google.com/document/d/1F0nZzGsTKIYRGQENq_3OZqVtJDFTACGYpna9bXN9yoM'),
-                          icon: Icon(
-                            MyIcon.usage_agreement_,
-                            color: Color.fromRGBO(12, 28, 101, 1),
-                            size: 35,
-                          ),
-                          label: Text('Usage Agreement')),
+                        onPressed: () => _launchURL(
+                            'https://docs.google.com/document/d/1xk-42gbUYtiW17eFGmrT4YarjUiurO6Q2ewxI74OpyA'),
+                        icon: Icon(
+                          MyIcon.usage_agreement_,
+                          color: Color.fromRGBO(12, 28, 101, 1),
+                          size: 35,
+                        ),
+                        label: Text('Usage Agreement'),
+                      ),
                     ],
                   ),
                 ),

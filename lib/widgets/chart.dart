@@ -6,29 +6,20 @@ import 'package:provider/provider.dart';
 class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final chartAmount = Provider.of<Transacts>(context);
+    bool _isEmpty = true;
     Map<String, double> dataMap = new Map();
 
     List<Color> colorList = [
       Colors.purple[50],
-      Colors.purple[100],
       Colors.purple[200],
-      Colors.purple[300],
       Colors.purple[400],
-      Colors.purple[500],
       Colors.purple[600],
-      Colors.purple[700],
       Colors.purple[800],
       Colors.purple[900],
-      Colors.blue[50],
       Colors.blue[100],
-      Colors.blue[200],
       Colors.blue[300],
-      Colors.blue[400],
       Colors.blue[500],
-      Colors.blue[600],
       Colors.blue[700],
-      Colors.blue[800],
       Colors.blue[900],
     ];
 
@@ -42,21 +33,25 @@ class Chart extends StatelessWidget {
             : Consumer<Transacts>(
                 child: Container(),
                 builder: (ctx, transacts, ch) {
-                  return transacts.transactoin.length <= 0
+                  for (var i = 0; i < transacts.transactoin.length; i++) {
+                    if (transacts.transactoin[i].type == 'Debt') {
+                      _isEmpty = false;
+                    }
+                  }
+                  return (_isEmpty)
                       ? ch
                       : Container(
                           height: 200,
                           child: ListView.builder(
-                              itemCount: chartAmount.transactoin.length,
+                              itemCount: transacts.transactoin.length,
                               itemBuilder: (context, i) {
                                 for (var i = 0;
-                                    i < chartAmount.transactoin.length;
+                                    i < transacts.transactoin.length;
                                     i++) {
-                                  if (chartAmount.transactoin[i].type == 'Debt')
+                                  if (transacts.transactoin[i].type == 'Debt')
                                     dataMap.putIfAbsent(
-                                        chartAmount.transactoin[i].name,
-                                        () =>
-                                            chartAmount.transactoin[i].amount);
+                                        transacts.transactoin[i].name,
+                                        () => transacts.transactoin[i].amount);
                                 }
                                 return (dataMap.isNotEmpty)
                                     ? Container(
