@@ -1,13 +1,14 @@
 import 'package:audit/icons/my_icon_icons.dart';
 import 'package:audit/srceens/add_transactions.dart';
+import 'package:audit/srceens/detail_pin_screen.dart';
 import 'package:audit/srceens/history_delete.dart';
 import 'package:audit/srceens/list_transactions.dart';
-// import 'package:audit/srceens/test_switch.dart';
 import 'package:audit/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MethodTransaction extends StatelessWidget {
+  static const routeName = '/method-transaction';
   _launchURL(String goUrl) async {
     String url = goUrl;
     if (await canLaunch(url)) {
@@ -72,9 +73,21 @@ class MethodTransaction extends StatelessWidget {
                   },
                 ),
               ),
-
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.fiber_pin,
+                    size: 40,
+                    color: Color.fromRGBO(12, 28, 101, 1),
+                  ),
+                  title: Text('Active Pin'),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(DetailPinScreen.routeName);
+                  },
+                ),
+              ),
               Spacer(),
-
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Container(
@@ -109,15 +122,6 @@ class MethodTransaction extends StatelessWidget {
                   ),
                 ),
               )
-              // Card(
-              //   elevation: 5,
-              //   child: ListTile(
-              //     title: Text('Test Switch'),
-              //     onTap: () {
-              //       Navigator.of(context).pushNamed(TestSwitch.routeName);
-              //     },
-              //   ),
-              // ),
             ],
           ),
         ),

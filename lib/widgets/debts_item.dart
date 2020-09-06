@@ -1,7 +1,6 @@
 import 'package:audit/providers/transacts.dart';
 import 'package:audit/widgets/sub_debt_item.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DebtsItem extends StatelessWidget {

@@ -1,5 +1,7 @@
 import 'package:audit/helpers/db_helper.dart';
 import 'package:audit/helpers/db_helper2.dart';
+import 'package:audit/helpers/db_helper3.dart';
+import 'package:audit/models/pin.dart';
 import 'package:audit/models/transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -7,13 +9,17 @@ import 'package:intl/intl.dart';
 class Transacts with ChangeNotifier {
   List<Transaction> _transaction = [];
   List<Transaction> _historyDelete = [];
-
+  List<Pin> _pinCode = [];
   List<Transaction> get transactoin {
     return [..._transaction];
   }
 
   List<Transaction> get historyDelete {
     return [..._historyDelete];
+  }
+
+  List<Pin> get pinCode {
+    return [..._pinCode];
   }
 
   void addTransaction(String name, double amount, String desc, String curr,
@@ -115,7 +121,6 @@ class Transacts with ChangeNotifier {
 
   Future<void> fetchAndSetDelTransaction() async {
     final dataList = await DBHelper2.getData('delTran');
-    // print(dataList);
     _historyDelete = dataList
         .map(
           (trans) => Transaction(
@@ -138,8 +143,39 @@ class Transacts with ChangeNotifier {
     SET amount = ?, currncy = ? 
     WHERE id = ?
     ''', [amount, currncy, id]);
-    print('done provider');
 
     return result;
+  }
+
+  void addPinCode(String newPinCode, String newIsActive) async {
+    final pin = Pin(pinCode: newPinCode, isActive: newIsActive);
+
+    _pinCode.add(pin);
+    notifyListeners();
+
+    DBHelper3.insert('pin', {
+      'pinCode': newPinCode,
+      'isActive': newIsActive,
+    });
+  }
+
+  Future<void> fetchAndSetPinCode() async {
+    final dataList = await DBHelper3.getData('pin');
+    _pinCode = dataList
+        .map(
+          (trans) => Pin(
+            pinCode: trans['pinCode'],
+            isActive: trans['isActive'],
+          ),
+        )
+        .toList();
+  }
+
+  void deletePinCode() async {
+    final db = await DBHelper3.database();
+    await db.delete('pin');
+
+    _pinCode.clear();
+    notifyListeners();
   }
 }
