@@ -1,4 +1,6 @@
+import 'package:audit/admob/ad_manager.dart';
 import 'package:audit/providers/transacts.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +11,44 @@ class NewTransactinos extends StatefulWidget {
 }
 
 class _NewTransactinosState extends State<NewTransactinos> {
+  Future<void> _initAdMob() {
+    return FirebaseAdMob.instance.initialize(appId: AdManager.appId);
+  }
+
+  InterstitialAd _interstitialAd;
+  bool _isInterstitialAdReady;
+
+  void _loadInterstitialAd() {
+    _interstitialAd.load();
+  }
+
+  void _onInterstitialAdEvent(MobileAdEvent event) {
+    switch (event) {
+      case MobileAdEvent.loaded:
+        _isInterstitialAdReady = true;
+        break;
+      case MobileAdEvent.failedToLoad:
+        _isInterstitialAdReady = false;
+        print('Failed to load an interstitial ad');
+        break;
+      case MobileAdEvent.closed:
+        // _moveToHome();
+        break;
+      default:
+      // do nothing
+    }
+  }
+
+  @override
+  void initState() {
+    _isInterstitialAdReady = false;
+
+    _interstitialAd = InterstitialAd(
+      adUnitId: AdManager.interstitialAdUnitId,
+      listener: _onInterstitialAdEvent,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _priceFocusNode = FocusNode();
@@ -26,7 +66,7 @@ class _NewTransactinosState extends State<NewTransactinos> {
       _descController.dispose();
       _amountController.dispose();
       _currController.dispose();
-
+      _interstitialAd?.dispose();
       super.dispose();
     }
 
@@ -55,6 +95,10 @@ class _NewTransactinosState extends State<NewTransactinos> {
             ),
             FlatButton(
               onPressed: () {
+                _loadInterstitialAd();
+                if (_isInterstitialAdReady) {
+                  _interstitialAd.show();
+                }
                 Provider.of<Transacts>(context, listen: false).addTransaction(
                   _nameController.text,
                   double.parse(_amountController.text),

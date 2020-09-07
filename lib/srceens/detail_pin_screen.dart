@@ -111,7 +111,7 @@ class _DetailPinScreenState extends State<DetailPinScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'You already Have Pin Code \nYou can remove or Change it',
+                            'You already Have Pin Code \nYou can Change it',
                             style: TextStyle(
                               fontSize: 20,
                               color: Color.fromRGBO(247, 78, 126, 1),

@@ -1,7 +1,6 @@
 import 'package:audit/providers/transacts.dart';
 import 'package:audit/srceens/add_transactions.dart';
 import 'package:audit/srceens/detail_pin_screen.dart';
-import 'package:audit/srceens/handlr_login_screen.dart';
 import 'package:audit/srceens/history_delete.dart';
 import 'package:audit/srceens/list_transactions.dart';
 import 'package:audit/srceens/method-transaction.dart';

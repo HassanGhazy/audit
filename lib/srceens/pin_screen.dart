@@ -44,7 +44,7 @@ class PinScreen extends StatelessWidget {
               Radius.circular(20.0),
             ),
           ),
-          title: Text('Wrong'),
+          title: Text('Error'),
           content: Text(message),
           actions: <Widget>[
             FlatButton(

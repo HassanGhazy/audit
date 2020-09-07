@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "930133523824",
+    "firebase_url": "https://audit-9f558.firebaseio.com",
+    "project_id": "audit-9f558",
+    "storage_bucket": "audit-9f558.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930133523824:android:005e3dacecce4dd37ae3b5",
+        "android_client_info": {
+          "package_name": "com.example.audit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930133523824-gmaersc4egvbgu3e1akbqc4u1ecv8tvd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ_CSV_JcSeFZSUtrXWqyjzuUQxmA4tFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930133523824-gmaersc4egvbgu3e1akbqc4u1ecv8tvd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
