@@ -9,6 +9,8 @@ class HistoryDelete extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final transacts = Provider.of<Transacts>(context);
+    final mediaQuery = MediaQuery.of(context);
+    final isLandScape = mediaQuery.orientation == Orientation.landscape;
     return Scaffold(
       appBar: AppBar(
         title: Text('History Delete'),
@@ -25,7 +27,9 @@ class HistoryDelete extends StatelessWidget {
                 children: <Widget>[
                   (transacts.historyDelete.isNotEmpty)
                       ? Container(
-                          height: MediaQuery.of(context).size.height * .8,
+                          height: (isLandScape)
+                              ? mediaQuery.size.height * .66
+                              : mediaQuery.size.height * .8,
                           child: ListView.builder(
                             itemCount: transacts.historyDelete.length,
                             itemBuilder: (context, i) {

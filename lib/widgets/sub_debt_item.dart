@@ -23,7 +23,7 @@ class SubDebtItem extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     subtitle: Text(
-                      '${(DateFormat.yMEd().add_jms().format(DateTime.parse(transacts.transactoin[i].oldDate))).toString()}',
+                      '${(DateFormat.yMEd().add_jms().format(DateTime.parse(transacts.transactoin[i].newDate))).toString()}',
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
@@ -144,9 +144,27 @@ class SubDebtItem extends StatelessWidget {
                                 actions: <Widget>[
                                   FlatButton(
                                     onPressed: () {
-                                      if (oldAmount != null &&
-                                          oldCurrncy != null &&
-                                          double.tryParse(oldAmount) != null) {
+                                      if (oldCurrncy == null) {
+                                        oldCurrncy =
+                                            transacts.transactoin[i].currncy;
+                                      }
+                                      if (oldAmount == null) {
+                                        oldAmount = transacts
+                                            .transactoin[i].amount
+                                            .toString();
+                                      }
+                                      if (oldAmount ==
+                                              transacts.transactoin[i].amount
+                                                  .toString() &&
+                                          oldCurrncy !=
+                                              transacts
+                                                  .transactoin[i].currncy) {
+                                        transacts.updateTransaction(
+                                            double.parse(oldAmount),
+                                            oldCurrncy,
+                                            transacts.transactoin[i].id);
+                                      } else if (double.tryParse(oldAmount) !=
+                                          null) {
                                         transacts.updateTransaction(
                                             double.parse(oldAmount),
                                             oldCurrncy,

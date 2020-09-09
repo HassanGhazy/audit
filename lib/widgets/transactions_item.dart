@@ -47,7 +47,7 @@ class TransactionsItem extends StatelessWidget {
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         subtitle: Text(
-                                          '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(transacts.transactoin[i].oldDate))}',
+                                          '${DateFormat("yyyy-MM-dd hh:mm").format(DateTime.parse(transacts.transactoin[i].newDate))}',
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {

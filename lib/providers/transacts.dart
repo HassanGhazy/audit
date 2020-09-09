@@ -10,6 +10,8 @@ class Transacts with ChangeNotifier {
   List<Transaction> _transaction = [];
   List<Transaction> _historyDelete = [];
   List<Pin> _pinCode = [];
+  List<Map<String, dynamic>> _totalAmountCurrency = [];
+  Map<String, Iterable<Map<String, dynamic>>> currncyAndAmount = {};
   List<Transaction> get transactoin {
     return [..._transaction];
   }
@@ -20,6 +22,53 @@ class Transacts with ChangeNotifier {
 
   List<Pin> get pinCode {
     return [..._pinCode];
+  }
+
+  List<Map<String, dynamic>> get totalAmountCurrency {
+    return [..._totalAmountCurrency];
+  }
+
+  bool isTotaled = true;
+
+  total() {
+    double totalDebt = 0;
+    double totalTransaction = 0;
+    double maxAmountDebt = 0;
+    double maxAmountTranasction = 0;
+    String descrptionMaxTransaction = '';
+    String currncyMaxTransaction = '';
+    String currncyMaxDebt = '';
+
+    String haveMaxDebt = '';
+
+    for (var i = 0; i < transactoin.length; i++) {
+      if (transactoin[i].type == 'Debt') {
+        totalDebt += transactoin[i].amount;
+
+        if (maxAmountDebt < transactoin[i].amount) {
+          maxAmountDebt = transactoin[i].amount;
+          haveMaxDebt = transactoin[i].name;
+          currncyMaxDebt = transactoin[i].currncy;
+        }
+      } else if (transactoin[i].type == 'Transaction') {
+        totalTransaction += transactoin[i].amount;
+        if (maxAmountTranasction < transactoin[i].amount) {
+          maxAmountTranasction = transactoin[i].amount;
+          descrptionMaxTransaction = transactoin[i].description;
+          currncyMaxTransaction = transactoin[i].currncy;
+        }
+      }
+    }
+    return [
+      totalDebt, // 0
+      totalTransaction, // 1
+      maxAmountDebt, // 2
+      haveMaxDebt, // 3
+      maxAmountTranasction, // 4
+      descrptionMaxTransaction, // 5
+      currncyMaxDebt, // 6
+      currncyMaxTransaction, // 7
+    ];
   }
 
   void addTransaction(String name, double amount, String desc, String curr,
@@ -63,6 +112,31 @@ class Transacts with ChangeNotifier {
             newDate: trans['newDate'],
             type: trans['type']))
         .toList();
+
+    for (var i = 0; i < dataList.length; i++) {
+      if (dataList[i]['type'] == 'Debt') {
+        _totalAmountCurrency.add(dataList[i]);
+      }
+    }
+
+    if (isTotaled) {
+      final mapped = _totalAmountCurrency
+          .fold<Map<String, Map<String, dynamic>>>({}, (p, v) {
+        final name = v["currncy"];
+
+        if (p.containsKey(name)) {
+          p[name]["amount"] += v["amount"];
+        } else {
+          p[name] = {...v, "amount": v["amount"]};
+        }
+
+        return p;
+      });
+
+      final newData = {'Total': mapped.values};
+      currncyAndAmount = newData;
+      isTotaled = false;
+    }
   }
 
   void deleteTransaction(String id) async {

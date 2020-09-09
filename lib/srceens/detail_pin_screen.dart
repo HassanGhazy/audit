@@ -38,6 +38,7 @@ class _DetailPinScreenState extends State<DetailPinScreen> {
       _secandController.text = '';
       _thirdController.text = '';
       _fourthontroller.text = '';
+      Navigator.of(context).pushReplacementNamed(MethodTransaction.routeName);
     }
 
     return Scaffold(
@@ -60,7 +61,7 @@ class _DetailPinScreenState extends State<DetailPinScreen> {
                         Container(
                           width: 200,
                           child: Text(
-                            'You need to activate Pin code \nEnter the number here',
+                            'You will activate Pin code \nEnter the number here',
                             style: TextStyle(
                               fontSize: 20,
                               color: Color.fromRGBO(247, 78, 126, 1),
@@ -74,23 +75,23 @@ class _DetailPinScreenState extends State<DetailPinScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              InputPin(
-                                  _firstController, null, _secandFocusNode),
+                              InputPin(TextInputAction.next, _firstController,
+                                  null, _secandFocusNode),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 20)),
-                              InputPin(_secandController, _secandFocusNode,
-                                  _thirdFocusNode),
+                              InputPin(TextInputAction.next, _secandController,
+                                  _secandFocusNode, _thirdFocusNode),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 20)),
-                              InputPin(_thirdController, _thirdFocusNode,
-                                  _fourthFocusNode),
+                              InputPin(TextInputAction.next, _thirdController,
+                                  _thirdFocusNode, _fourthFocusNode),
                               Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 20)),
-                              InputPin(_fourthontroller, _fourthFocusNode,
-                                  FocusNode()),
+                              InputPin(TextInputAction.done, _fourthontroller,
+                                  _fourthFocusNode, FocusNode()),
                             ],
                           ),
                         ),
@@ -98,8 +99,6 @@ class _DetailPinScreenState extends State<DetailPinScreen> {
                         RaisedButton(
                           onPressed: () {
                             _savePinCode();
-                            Navigator.of(context).pushReplacementNamed(
-                                MethodTransaction.routeName);
                           },
                           child: Text('Save'),
                         )
@@ -111,7 +110,7 @@ class _DetailPinScreenState extends State<DetailPinScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            'You already Have Pin Code \nYou can Change it',
+                            'You can Update Your Pin from here',
                             style: TextStyle(
                               fontSize: 20,
                               color: Color.fromRGBO(247, 78, 126, 1),

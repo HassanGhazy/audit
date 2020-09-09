@@ -3,6 +3,8 @@ import 'package:audit/srceens/add_transactions.dart';
 import 'package:audit/srceens/detail_pin_screen.dart';
 import 'package:audit/srceens/history_delete.dart';
 import 'package:audit/srceens/list_transactions.dart';
+import 'package:audit/srceens/pin_screen.dart';
+import 'package:audit/srceens/summary_screen.dart';
 import 'package:audit/widgets/chart.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,6 +22,8 @@ class MethodTransaction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandScape = mediaQuery.orientation == Orientation.landscape;
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 14, 89, 1),
       appBar: AppBar(
@@ -40,11 +44,26 @@ class MethodTransaction extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height * .848 +
-              MediaQuery.of(context).padding.top,
+          height: (isLandScape)
+              ? mediaQuery.size.height
+              : mediaQuery.size.height - 58 - mediaQuery.padding.top,
           child: Column(
             children: <Widget>[
-              Chart(),
+              (isLandScape) ? Container() : Chart(),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.add,
+                    size: 40,
+                    color: Color.fromRGBO(12, 28, 101, 1),
+                  ),
+                  title: Text('Add New Transaction Or Debt'),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AddTransactinos.routeName);
+                  },
+                ),
+              ),
               Card(
                 elevation: 5,
                 child: ListTile(
@@ -63,20 +82,6 @@ class MethodTransaction extends StatelessWidget {
                 elevation: 5,
                 child: ListTile(
                   leading: Icon(
-                    Icons.delete_outline,
-                    size: 40,
-                    color: Color.fromRGBO(12, 28, 101, 1),
-                  ),
-                  title: Text('History Delete'),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(HistoryDelete.routeName);
-                  },
-                ),
-              ),
-              Card(
-                elevation: 5,
-                child: ListTile(
-                  leading: Icon(
                     Icons.fiber_pin,
                     size: 40,
                     color: Color.fromRGBO(12, 28, 101, 1),
@@ -87,10 +92,39 @@ class MethodTransaction extends StatelessWidget {
                   },
                 ),
               ),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.archive,
+                    size: 40,
+                    color: Color.fromRGBO(12, 28, 101, 1),
+                  ),
+                  title: Text('Summary'),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(SummaryScreen.routeName);
+                  },
+                ),
+              ),
+              Card(
+                elevation: 5,
+                child: ListTile(
+                  leading: Icon(
+                    Icons.delete_outline,
+                    size: 40,
+                    color: Color.fromRGBO(12, 28, 101, 1),
+                  ),
+                  title: Text('History Delete'),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(HistoryDelete.routeName);
+                  },
+                ),
+              ),
               Spacer(),
               Padding(
                 padding: const EdgeInsets.all(5),
                 child: Container(
+                  height: 55,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
                     color: Colors.white,

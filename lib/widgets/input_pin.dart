@@ -5,8 +5,10 @@ class InputPin extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode foucusNodeCurrntly;
   final FocusNode foucusNodeNext;
+  final TextInputAction textInputAction;
 
-  InputPin(this.controller, this.foucusNodeCurrntly, this.foucusNodeNext);
+  InputPin(this.textInputAction, this.controller, this.foucusNodeCurrntly,
+      this.foucusNodeNext);
 
   @override
   Widget build(BuildContext context) {
@@ -14,22 +16,29 @@ class InputPin extends StatelessWidget {
       width: 50,
       height: 50,
       decoration: BoxDecoration(
-          shape: BoxShape.rectangle,
-          color: Color.fromRGBO(12, 28, 101, 1),
-          borderRadius: BorderRadius.all(Radius.circular(15))),
+        shape: BoxShape.rectangle,
+        color: Color.fromRGBO(12, 28, 101, 1),
+        borderRadius: BorderRadius.all(
+          Radius.circular(15),
+        ),
+      ),
       child: TextFormField(
-        textInputAction: TextInputAction.next,
-        keyboardType: TextInputType.numberWithOptions(),
+        textInputAction: textInputAction,
+        keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
         controller: controller,
         maxLength: 1,
+        autofocus: true,
+        onChanged: (value) {
+          if (value != '') {
+            FocusScope.of(context).requestFocus(foucusNodeNext);
+          }
+        },
         decoration: InputDecoration(
           counterText: "",
         ),
+        obscureText: true,
         focusNode: foucusNodeCurrntly,
-        onFieldSubmitted: (_) {
-          FocusScope.of(context).requestFocus(foucusNodeNext);
-        },
         inputFormatters: [
           new LengthLimitingTextInputFormatter(1),
         ],
@@ -37,10 +46,6 @@ class InputPin extends StatelessWidget {
           color: Colors.white,
           fontSize: 25,
         ),
-        validator: (value) {
-          if (value.isEmpty) return '';
-          return null;
-        },
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:audit/srceens/history_delete.dart';
 import 'package:audit/srceens/list_transactions.dart';
 import 'package:audit/srceens/method-transaction.dart';
 import 'package:audit/srceens/pin_screen.dart';
-
+import 'package:audit/srceens/summary_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           DetailPinScreen.routeName: (ctx) => DetailPinScreen(),
           PinScreen.routeName: (ctx) => PinScreen(),
           MethodTransaction.routeName: (ctx) => MethodTransaction(),
+          SummaryScreen.routeName: (ctx) => SummaryScreen(),
         },
       ),
     );
